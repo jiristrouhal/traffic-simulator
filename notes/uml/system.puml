@@ -1,0 +1,17 @@
+@startuml architecture
+component MoveLoop
+component CarCollection
+component Car
+component RoadSegments
+
+
+MoveLoop --> CarCollection : calls update\non each car
+CarCollection --> Car: accesses car
+Car --> RoadSegments: accesses road\nsegment data
+RoadSegments --> Car: provides data\nfor update
+Car --> PreviousCarState: updates its state\nbased on previous state
+PreviousCarState --> Car: provides previous\nstate for update
+Car --> Car: updates its state
+Car --> PreviousCarState: updates previous\nstate after update
+
+@enduml
