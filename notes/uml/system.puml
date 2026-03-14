@@ -1,17 +1,37 @@
 @startuml architecture
-component MoveLoop
-component CarCollection
-component Car
-component RoadSegments
+left to right direction
+
+class Item
+class DisplayableItem
+class Road
+class Car
+class Conditions
+class NoCar
+class DisplayblePath
+
+skinparam style strictuml
+skinparam linetype ortho
 
 
-MoveLoop --> CarCollection : calls update\non each car
-CarCollection --> Car: accesses car
-Car --> RoadSegments: accesses road\nsegment data
-RoadSegments --> Car: provides data\nfor update
-Car --> PreviousCarState: updates its state\nbased on previous state
-PreviousCarState --> Car: provides previous\nstate for update
-Car --> Car: updates its state
-Car --> PreviousCarState: updates previous\nstate after update
+' Positioning
+Item -[hidden]-> Road
+Road -[hidden]-> Car
+Conditions -[hidden]-> Car : ""
+Car -[hidden]-> NoCar
+
+' Relations
+Road --> Conditions
+Road --> Item
+Car --> Conditions
+NoCar --|> Car
+
+DisplayableItem --> Item
+DisplayblePath --> Road
+
+' Explicit layout
+Item -[hidden]left-> Road
+Road -[hidden]left-> Car
+Conditions -[hidden]down-> Car
+Car -[hidden]down-> NoCar
 
 @enduml
